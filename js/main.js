@@ -23,9 +23,9 @@ const descriptions = [
   'Чтоб я так жил',
 ];
 
-const array_objects = [];
+const arrayObjects = [];
 
-const random_number =(min, max) => {
+const randomNumber =(min, max) => {
   if (min < 0 || max < 0) {
     return -1
   }
@@ -35,30 +35,30 @@ const random_number =(min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const array_comments = (count) => {
+const arrayComments = (count) => {
   const array = [];
     for(let i = 0; i < count; i++){
       array.push({
       id: i,
-      avatar: `img/avatar-${random_number(1, 6)}.svg`,
-      message: MESSANGES[random_number(0, MESSANGES.length - 1)],
-      name: NAME[random_number(0,NAME.length - 1)]
+      avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
+      message: MESSANGES[randomNumber(0, MESSANGES.length - 1)],
+      name: NAME[randomNumber(0,NAME.length - 1)]
     });
   }
   return array;
 };
 
-const add_photos = () => {
+const addPhotos = () => {
   for(let i = 0; i < OBJECT; i++) {
-    array_objects.push({
+    arrayObjects.push({
       id: i,
       url: `photos/${i + 1}.jpg`,
-      description: descriptions[random_number(0, descriptions.length - 1)],
-      likes: random_number(15,200),
-      comments: array_comments(random_number(0, 2))
+      description: descriptions[randomNumber(0, descriptions.length - 1)],
+      likes: randomNumber(15,200),
+      comments: arrayComments(randomNumber(0, 2))
     });
   }
 };
 
-add_photos();
-console.log(array_objects);
+addPhotos();
+console.log(arrayObjects);
