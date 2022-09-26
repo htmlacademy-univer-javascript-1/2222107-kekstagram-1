@@ -37,8 +37,8 @@ const randomNumber =(min, max) => {
 
 const arrayComments = (count) => {
   const array = [];
-    for(let i = 0; i < count; i++){
-      array.push({
+  for(let i = 0; i < count; i++){
+    array.push({
       id: i,
       avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
       message: MESSANGES[randomNumber(0, MESSANGES.length - 1)],
