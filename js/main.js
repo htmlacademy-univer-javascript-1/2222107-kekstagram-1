@@ -16,7 +16,7 @@ const MESSANGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const DESCRIPTION = [
+const descriptions = [
   'Милый песик',
   'Нафотографировал тут',
   'Обожаю это фотку',
@@ -37,8 +37,8 @@ const random_number =(min, max) => {
 
 const array_comments = (count) => {
   const array = [];
-  for(let i = 0; i < count; i++){
-    array.push({
+    for(let i = 0; i < count; i++){
+      array.push({
       id: i,
       avatar: `img/avatar-${random_number(1, 6)}.svg`,
       message: MESSANGES[random_number(0, MESSANGES.length - 1)],
@@ -53,7 +53,7 @@ const add_photos = () => {
     array_objects.push({
       id: i,
       url: `photos/${i + 1}.jpg`,
-      description: DESCRIPTION[random_number(0, DESCRIPTION.length - 1)],
+      description: descriptions[random_number(0, descriptions.length - 1)],
       likes: random_number(15,200),
       comments: array_comments(random_number(0, 2))
     });
