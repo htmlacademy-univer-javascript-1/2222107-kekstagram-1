@@ -62,5 +62,3 @@ const add_photos = () => {
 
 add_photos();
 console.log(array_objects);
-
-
