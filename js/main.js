@@ -1,3 +1,3 @@
-import{arrayObjects} from './data.js';
+import {arrayObjects} from './data.js';
 
 console.log(arrayObjects);

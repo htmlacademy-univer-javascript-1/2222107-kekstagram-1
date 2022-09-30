@@ -62,3 +62,4 @@ const addPhotos = () => {
 
 addPhotos();
 
+export {arrayObjects};
