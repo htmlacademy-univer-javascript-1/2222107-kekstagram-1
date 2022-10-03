@@ -16,3 +16,9 @@ globals:
 
 extends:
   "htmlacademy/vanilla"
+
+module.exports = {
+  rules: {
+  'no-console': 'off',
+  },
+};
