@@ -8,7 +8,7 @@ const randomNumber =(min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const getRandomElementFromArray = (array) => array[getRandomInt(0, array.length - 1)];
+const getRandomElementFromArray = (array) => array[randomNumber(0, array.length - 1)];
 
 const checkStringLength = (str, max) => str.length <= max;
 
