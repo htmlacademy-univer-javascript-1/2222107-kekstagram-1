@@ -6,6 +6,7 @@ const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const commentsCount = document.querySelector('.comments-count');
 const socialComments = document.querySelector('.social__comments');
+
 const socialCaption = document.querySelector('.social__caption');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -37,18 +38,21 @@ const openModal = (evt, data) => {
     likesCount.textContent = image.likes;
     commentsCount.textContent = image.comments.length;
     socialComments.innerHTML = '';
-    image.comments.forEach((comment) => {
-      socialComments.insertAdjacentHTML('beforeend', `
-          <li class="social__comment">
-            <img
-                class="social__picture"
-                src="${comment.avatar}"
-                alt="${comment.name}"
-                width="35" height="35">
-            <p class="social__text">${comment.message}</p>
-          </li>
-        `);
-    });
+
+    for (const comment of image.comments) {
+      image.comments(() => {
+        socialComments.insertAdjacentHTML('beforeend', `
+            <li class="social__comment">
+              <img
+                  class="social__picture"
+                  src="${comment.avatar}"
+                  alt="${comment.name}"
+                  width="35" height="35">
+              <p class="social__text">${comment.message}</p>
+            </li>
+          `);
+      });
+    }
     socialCaption.textContent = image.description;
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
