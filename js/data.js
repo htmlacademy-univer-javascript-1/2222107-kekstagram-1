@@ -1,4 +1,4 @@
-import {randomNumber} from './utils.js';
+import {randomNumber, identificationGenerator} from './util.js';
 
 const OBJECT = 25;
 
@@ -18,40 +18,28 @@ const MESSANGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const descriptions = [
+const DESCRIPTION = [
   'Милый песик',
   'Нафотографировал тут',
   'Обожаю это фотку',
   'Чтоб я так жил',
 ];
 
-const arrayObjects = [];
+const arrayComments = () => ({
+  id: identificationGenerator,
+  avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
+  message: MESSANGES[randomNumber(0, MESSANGES.length - 1)],
+  name: NAME[randomNumber(0,NAME.length - 1)],
+});
 
-const arrayComments = (count) => {
-  const array = [];
-  for(let i = 0; i < count; i++){
-    array.push({
-      id: i,
-      avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
-      message: MESSANGES[randomNumber(0, MESSANGES.length - 1)],
-      name: NAME[randomNumber(0,NAME.length - 1)]
-    });
-  }
-  return array;
-};
+const addPhoto = () => ({
+  id: identificationGenerator,
+  url: `photos/${randomNumber + 1}.jpg`,
+  description: DESCRIPTION[randomNumber(0, DESCRIPTION.length - 1)],
+  likes: randomNumber(15,200),
+  comments: arrayComments(randomNumber(0, 2))
+});
 
-const addPhotos = () => {
-  for(let i = 0; i < OBJECT; i++) {
-    arrayObjects.push({
-      id: i,
-      url: `photos/${i + 1}.jpg`,
-      description: descriptions[randomNumber(0, descriptions.length - 1)],
-      likes: randomNumber(15,200),
-      comments: arrayComments(randomNumber(0, 2))
-    });
-  }
-};
+const addPhotos = () => Array.from({length: OBJECT}, addPhoto);
 
-addPhotos();
-
-export {arrayObjects};
+export {addPhotos};

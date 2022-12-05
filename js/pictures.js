@@ -1,15 +1,18 @@
 import {isEscapeKey} from './util.js';
 
-const pictures = document.querySelector('.pictures');
-const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = document.querySelector('.big-picture__img img');
-const likesCount = document.querySelector('.likes-count');
-const commentsCount = document.querySelector('.comments-count');
-const socialComments = document.querySelector('.social__comments');
+const bigPictureSection = document.querySelector('.big-picture');
 
-const socialCaption = document.querySelector('.social__caption');
-const socialCommentCount = document.querySelector('.social__comment-count');
-const commentsLoader = document.querySelector('.comments-loader');
+const pictures = bigPictureSection.querySelector('.pictures');
+const bigPicture = bigPictureSection.querySelector('.big-picture');
+const bigPictureImg = bigPictureSection.querySelector('.big-picture__img');
+const likesCount = bigPictureSection.querySelector('.likes-count');
+const commentsCount = bigPictureSection.querySelector('.comments-count');
+const socialComments = bigPictureSection.querySelector('.social__comments');
+const socialCommentsElem = socialComments.querySelector('.social__comment');
+
+/* const socialCaption = bigPictureSection.querySelector('.social__caption');*/
+const socialCommentCount = bigPictureSection.querySelector('.social__comment-count');
+const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
 const onModalEscKeydown = (event) => {
@@ -20,11 +23,16 @@ const onModalEscKeydown = (event) => {
   }
 };
 
-const closeModal = () => {
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onModalEscKeydown);
+const closeModal = (evt) => {
+  if (isEscapeKey(evt) || evt.type === 'click') {
+    bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', closeModal);
+    bigPictureCancel.removeEventListener('click', closeModal);
+    document.removeEventListener('keydown', onModalEscKeydown);
+  }
 };
+
 
 const openModal = (evt, data) => {
   const picture = evt.target.closest('.picture');
@@ -32,39 +40,38 @@ const openModal = (evt, data) => {
   if (picture) {
     const image = data[picture.dataset.index];
 
-    bigPicture.classList.remove('hidden');
-    bigPictureImg.src = image.url;
-    bigPictureImg.alt = image.description;
-    likesCount.textContent = image.likes;
-    commentsCount.textContent = image.comments.length;
-    socialComments.innerHTML = '';
+    bigPictureSection.classList.remove('hidden');
 
-    for (const comment of image.comments) {
-      image.comments(() => {
-        socialComments.insertAdjacentHTML('beforeend', `
-            <li class="social__comment">
-              <img
-                  class="social__picture"
-                  src="${comment.avatar}"
-                  alt="${comment.name}"
-                  width="35" height="35">
-              <p class="social__text">${comment.message}</p>
-            </li>
-          `);
-      });
+    for (let i = 0; i < commentsCount; i++) {
+      const comment = socialCommentsElem.cloneNode(true);
+      bigPictureImg.src = image.url;
+      bigPictureImg.alt = image.description;
+      likesCount.textContent = image.likes;
+      socialComments.appendChild(comment);
     }
-    socialCaption.textContent = image.description;
+
+    bigPictureImg.src = image.url;
+    likesCount.textContent = image.likes;
+    bigPictureImg.alt = image.description;
+
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
-    document.body.classList.add('modal-open');
 
-    document.addEventListener('keydown', onModalEscKeydown);
+    bigPicture.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    document.addEventListener('keydown', closeModal);
+    bigPictureCancel.addEventListener('click', closeModal);
   }
 };
 
-const thumbnailsClickHandler = (data) => {
-  pictures.addEventListener('click', (evt) => openModal(evt, data));
-  bigPictureCancel.addEventListener('click', closeModal);
+const thumbnailClickHandler = (data) => {
+  pictures.addEventListener('click', (e) => {
+    const picture = e.target.closest('.picture');
+
+    if (picture) {
+      openModal(data[picture.dataset.index]);
+    }
+  });
 };
 
-export {thumbnailsClickHandler};
+export {thumbnailClickHandler};
