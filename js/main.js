@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
-import {arrayObjects} from './data.js';
+import './util.js';
+import {addPhotos} from './data.js';
+import {addThumbnails} from './thumbnails.js';
 
-console.log(arrayObjects);
+addThumbnails(addPhotos());
