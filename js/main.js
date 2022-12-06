@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import './util.js';
+import './utils.js';
 import {addPhotos} from './data.js';
 import {addThumbnails} from './thumbnails.js';
 import './form.js';

@@ -1,6 +1,6 @@
-import {randomNumber, identificationGenerator} from './util.js';
+import {randomNumber, identificationGenerator} from './utils.js';
 
-const OBJECT = 25;
+const OBJECT = 24;
 
 const NAME = [
   'Николай',
@@ -26,15 +26,15 @@ const DESCRIPTION = [
 ];
 
 const arrayComments = () => ({
-  id: identificationGenerator,
+  id: identificationGenerator()(),
   avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
   message: MESSANGES[randomNumber(0, MESSANGES.length - 1)],
   name: NAME[randomNumber(0,NAME.length - 1)],
 });
 
 const addPhoto = () => ({
-  id: identificationGenerator,
-  url: `photos/${randomNumber + 1}.jpg`,
+  id: identificationGenerator()(),
+  url: `photos/${randomNumber(1, OBJECT) + 1}.jpg`,
   description: DESCRIPTION[randomNumber(0, DESCRIPTION.length - 1)],
   likes: randomNumber(15,200),
   comments: arrayComments(randomNumber(0, 2))

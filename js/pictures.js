@@ -1,8 +1,8 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey} from './utils.js';
 
 const bigPictureSection = document.querySelector('.big-picture');
 
-const pictures = bigPictureSection.querySelector('.pictures');
+const pictures = document.querySelector('.pictures');
 const bigPicture = bigPictureSection.querySelector('.big-picture');
 const bigPictureImg = bigPictureSection.querySelector('.big-picture__img');
 const likesCount = bigPictureSection.querySelector('.likes-count');

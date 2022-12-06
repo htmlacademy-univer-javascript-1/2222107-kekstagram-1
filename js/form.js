@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey} from './utils.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
 const MAX_TAGS_NUMBER = 5;
