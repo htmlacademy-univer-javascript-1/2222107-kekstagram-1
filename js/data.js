@@ -1,6 +1,6 @@
 import {randomNumber, identificationGenerator} from './utils.js';
 
-const OBJECT = 24;
+const OBJECT = 25;
 
 const NAME = [
   'Николай',
@@ -34,7 +34,7 @@ const arrayComments = () => ({
 
 const addPhoto = () => ({
   id: identificationGenerator()(),
-  url: `photos/${randomNumber(1, OBJECT) + 1}.jpg`,
+  url: `photos/${randomNumber(1, OBJECT)}.jpg`,
   description: DESCRIPTION[randomNumber(0, DESCRIPTION.length - 1)],
   likes: randomNumber(15,200),
   comments: arrayComments(randomNumber(0, 2))
