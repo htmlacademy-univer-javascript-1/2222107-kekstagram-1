@@ -25,7 +25,7 @@ const DESCRIPTION = [
   'Чтоб я так жил',
 ];
 
-const arrayComments = () => ({
+const createArrayComments = () => ({
   id: identificationGenerator()(),
   avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
   message: MESSANGES[randomNumber(0, MESSANGES.length - 1)],
@@ -37,9 +37,8 @@ const addPhoto = () => ({
   url: `photos/${randomNumber(1, OBJECT)}.jpg`,
   description: DESCRIPTION[randomNumber(0, DESCRIPTION.length - 1)],
   likes: randomNumber(15,200),
-  comments: arrayComments(randomNumber(0, 2))
+  comments: Array.from({length: randomNumber(1, 12)}, createArrayComments)
 });
-
 const addPhotos = () => Array.from({length: OBJECT}, addPhoto);
 
 export {addPhotos};

@@ -1,7 +1,7 @@
 import {isEscapeKey} from './utils.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
-const MAX_TAGS_NUMBER = 5;
+const COUNT_TAGS = 5;
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');
@@ -31,12 +31,12 @@ pristine.addValidator(textHashtags, (value) => {
   if (value !== '') {
     const hashTagsArray = value.toLowerCase().split(' ');
 
-    if (hashTagsArray.length > MAX_TAGS_NUMBER) {
+    if (hashTagsArray.length > COUNT_TAGS) {
       return false;
     }
   }
   return true;
-}, `Максимальное число хештегов - ${MAX_TAGS_NUMBER}`);
+}, `Максимальное число хештегов - ${COUNT_TAGS}`);
 
 pristine.addValidator(textHashtags, (value) => {
   if (value === '') {
