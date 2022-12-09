@@ -1,4 +1,4 @@
-import {thumbnailsClickHandler} from './pictures.js';
+import {thumbnailClickHandler} from './pictures.js';
 
 const template = document.querySelector('#picture').content;
 const documentFragment = document.createDocumentFragment();
@@ -16,7 +16,8 @@ const addThumbnails = (photos) => {
   }
   pictures.append(documentFragment);
 
-  thumbnailsClickHandler(photos);
+  thumbnailClickHandler(photos);
+  document.querySelector('.pictures__title').classList.remove('visually-hidden');
 };
 
 export {addThumbnails};
