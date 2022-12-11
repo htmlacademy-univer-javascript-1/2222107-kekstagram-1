@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import {isEscapeKey} from './utils.js';
+import {smartSlider} from './slider.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
 const COUNT_TAGS = 5;
@@ -21,6 +22,10 @@ const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const effectsList = document.querySelector('.effects__list');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectLevelSlider = document.querySelector('.effect-level__slider');
+
+const smartSliderFilters = smartSlider('none', effectLevelSlider, effectLevelValue);
 
 scaleControlSmaller.addEventListener('click', () => {
   let percent = Number(scaleControlValue.value.slice(0, -1));
@@ -46,6 +51,9 @@ const applyChanges = (value) => {
     console.log(imgPreview.classList);
   }
   imgPreview.classList.add(`effects__preview--${value}`);
+
+  effectLevelSlider.noUiSlider.updateOptions(smartSliderFilters.getOptions());
+  imgPreview.style.filter = smartSliderFilters.getStyles();
 };
 
 effectsList.addEventListener('click', (e) => {
@@ -113,6 +121,13 @@ imgUploadForm.addEventListener('submit', (e) => {
   if (!pristine.validate()) {
     e.preventDefault();
   }
+});
+
+noUiSlider.create(effectLevelSlider, smartSliderFilters.getOptions());
+
+effectLevelSlider.noUiSlider.on('update', () => {
+  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+  imgPreview.style.filter = smartSliderFilters.getStyles();
 });
 
 
