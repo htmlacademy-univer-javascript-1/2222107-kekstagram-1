@@ -4,7 +4,6 @@ import {smartSlider} from './slider.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
 const COUNT_TAGS = 5;
-
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -48,11 +47,14 @@ scaleControlBigger.addEventListener('click', () => {
 const applyChanges = (value) => {
   if (imgPreview.classList.length !== 0) {
     imgPreview.classList.remove(imgPreview.classList[0]);
-    console.log(imgPreview.classList);
+
   }
+  smartSliderFilters.setCurrentFilter(value);
+
   imgPreview.classList.add(`effects__preview--${value}`);
 
   effectLevelSlider.noUiSlider.updateOptions(smartSliderFilters.getOptions());
+  console.log(smartSliderFilters.getStyles());
   imgPreview.style.filter = smartSliderFilters.getStyles();
 };
 
@@ -63,7 +65,6 @@ effectsList.addEventListener('click', (e) => {
     applyChanges(value);
   }
 });
-
 
 const checkIfHashtagsRepeated = () => {
   const hashTagsArray = textHashtags.value.toLowerCase().split(' ');
@@ -113,6 +114,7 @@ uploadFile.addEventListener('change', () => {
     imgPreview.src = evt.target.result;
   };
   reader.readAsDataURL(file);
+  imgPreview.setAttribute('style', 'transform: scale(1)');
   document.addEventListener('keydown', closeUploadFileForm);
   uploadCancel.addEventListener('click', closeUploadFileForm);
 });
@@ -128,6 +130,6 @@ noUiSlider.create(effectLevelSlider, smartSliderFilters.getOptions());
 effectLevelSlider.noUiSlider.on('update', () => {
   effectLevelValue.value = effectLevelSlider.noUiSlider.get();
   imgPreview.style.filter = smartSliderFilters.getStyles();
+  console.log(imgPreview.classList);
 });
-
 
