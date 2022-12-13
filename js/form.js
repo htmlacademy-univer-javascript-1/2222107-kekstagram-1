@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import {isEscapeKey} from './utils.js';
 import {smartSlider} from './slider.js';
+import {sendData} from './api.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
 const COUNT_TAGS = 5;
@@ -23,6 +24,7 @@ const scaleControlValue = document.querySelector('.scale__control--value');
 const effectsList = document.querySelector('.effects__list');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
+const imgUploadSubmit = document.querySelector('.img-upload__submit');
 
 const smartSliderFilters = smartSlider('none', effectLevelSlider, effectLevelValue);
 
@@ -94,14 +96,17 @@ pristine.addValidator(textHashtags, checkIfHashtagsRepeated, 'Хештеги р�
 pristine.addValidator(textHashtags, checkMaxHashtagsCount, `Максимальное число хештегов - ${COUNT_TAGS}`);
 pristine.addValidator(textHashtags, checkIfHashtagCorrect, 'Один из введённых вами хештегов некорректен');
 
-
-const closeUploadFileForm = (e) => {
-  if ((isEscapeKey(e) && document.activeElement !== textHashtags && document.activeElement !== textDescription) || e.type === 'click') {
+const closeUploadFileForm = (e = null, clear = true) => {
+  if (e === null || (isEscapeKey(e) && document.activeElement !== textHashtags && document.activeElement !== textDescription) || e.type === 'click') {
     imgUploadOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', closeUploadFileForm);
     uploadCancel.removeEventListener('click', closeUploadFileForm);
-    imgUploadForm.reset();
+
+    if (clear) {
+      imgUploadForm.reset();
+      applyChanges('none');
+    }
   }
 };
 
@@ -119,11 +124,37 @@ uploadFile.addEventListener('change', () => {
   uploadCancel.addEventListener('click', closeUploadFileForm);
 });
 
-imgUploadForm.addEventListener('submit', (e) => {
-  if (!pristine.validate()) {
+const blockSubmitButton = () => {
+  imgUploadSubmit.disabled = true;
+  imgUploadSubmit.textContent = 'Публикация...';
+};
+
+const unblockSubmitButton = () => {
+  imgUploadSubmit.disabled = false;
+  imgUploadSubmit.textContent = 'Опубликовать';
+};
+
+const setUserFormSubmit = (onSuccess, onError) => {
+  imgUploadForm.addEventListener('submit', (e) => {
     e.preventDefault();
-  }
-});
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+        },
+        () => {
+          onError();
+          unblockSubmitButton();
+        },
+        new FormData(imgUploadForm)
+      );
+    }
+  });
+};
 
 noUiSlider.create(effectLevelSlider, smartSliderFilters.getOptions());
 
@@ -133,3 +164,7 @@ effectLevelSlider.noUiSlider.on('update', () => {
   console.log(imgPreview.classList);
 });
 
+export {
+  setUserFormSubmit,
+  closeUploadFileForm
+};
