@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
 import {isEscapeKey} from './utils.js';
 import {smartSlider} from './slider.js';
-import {sendData} from './api.js';
+import {sendRequest} from './api.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
 const COUNT_TAGS = 5;
@@ -56,7 +55,6 @@ const applyChanges = (value) => {
   imgPreview.classList.add(`effects__preview--${value}`);
 
   effectLevelSlider.noUiSlider.updateOptions(smartSliderFilters.getOptions());
-  console.log(smartSliderFilters.getStyles());
   imgPreview.style.filter = smartSliderFilters.getStyles();
 };
 
@@ -137,11 +135,10 @@ const unblockSubmitButton = () => {
 const setUserFormSubmit = (onSuccess, onError) => {
   imgUploadForm.addEventListener('submit', (e) => {
     e.preventDefault();
-
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      sendData(
+      sendRequest(
         () => {
           onSuccess();
           unblockSubmitButton();
@@ -150,6 +147,7 @@ const setUserFormSubmit = (onSuccess, onError) => {
           onError();
           unblockSubmitButton();
         },
+        'POST',
         new FormData(imgUploadForm)
       );
     }
@@ -161,10 +159,9 @@ noUiSlider.create(effectLevelSlider, smartSliderFilters.getOptions());
 effectLevelSlider.noUiSlider.on('update', () => {
   effectLevelValue.value = effectLevelSlider.noUiSlider.get();
   imgPreview.style.filter = smartSliderFilters.getStyles();
-  console.log(imgPreview.classList);
 });
 
 export {
   setUserFormSubmit,
-  closeUploadFileForm
+  closeUploadFileForm,
 };
