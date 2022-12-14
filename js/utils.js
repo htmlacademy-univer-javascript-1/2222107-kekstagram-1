@@ -1,3 +1,5 @@
+import {addThumbnails} from './thumbnails.js';
+
 const randomNumber =(min, max) => {
   if (min < 0 || max < 0) {
     return -1;
@@ -20,11 +22,33 @@ const identificationGenerator = () => {
   return () => ++identification;
 };
 
+const onSuccess = (data) => {
+  const photos = data.slice();
+  addThumbnails(photos);
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+};
+
+const onFail = () => {
+  const messageAlert = document.createElement('div');
+  messageAlert.style.position = 'absolute';
+  messageAlert.style.left = 0;
+  messageAlert.style.top = 0;
+  messageAlert.style.right = 0;
+  messageAlert.style.textAlign = 'center';
+  messageAlert.style.fontSize = '30px';
+  messageAlert.style.backgroundColor = 'red';
+  messageAlert.style.padding = '10px 5px';
+  messageAlert.textContent = 'Ошибка загрузки данных';
+  document.body.append(messageAlert);
+};
+
 export {
   randomNumber,
   checkStringLength,
   getRandomElementFromArray,
   identificationGenerator,
-  isEscapeKey
+  isEscapeKey,
+  onSuccess,
+  onFail
 };
 

@@ -1,4 +1,5 @@
 import {isEscapeKey} from './utils.js';
+import {closeUploadFileForm} from './form.js';
 
 const successTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
@@ -22,7 +23,7 @@ const showSuccess = () => {
       }
     }
   };
-
+  closeUploadFileForm();
   document.addEventListener('click', closeModal);
   document.addEventListener('keydown', closeModal);
   document.body.append(success);
@@ -44,10 +45,11 @@ const showError = () => {
         document.removeEventListener('click', closeModal);
         document.removeEventListener('keydown', closeModal);
         document.querySelector('.error').remove();
+        document.querySelector('.img-upload__form').classList.remove('hidden');
       }
     }
   };
-
+  document.querySelector('.img-upload__form').classList.add('hidden');
   document.addEventListener('click', closeModal);
   document.addEventListener('keydown', closeModal);
   document.body.append(error);
