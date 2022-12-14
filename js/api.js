@@ -16,7 +16,6 @@ const sendRequest = (onSuccess, onFail, method, body) => {
       onSuccess(data);
     })
     .catch(() => {
-      console.log(2);
       onFail();
     });
 };
