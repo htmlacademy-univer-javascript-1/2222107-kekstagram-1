@@ -1,7 +1,10 @@
-/* eslint-disable no-console */
 import './utils.js';
-import {addPhotos} from './data.js';
-import {addThumbnails} from './thumbnails.js';
 import './form.js';
+import {setUserFormSubmit} from './form.js';
+import {sendRequest} from './api.js';
+import './pictures.js';
+import {onSuccess, onFail} from './utils.js';
+import {showError, showSuccess} from './alerts.js';
 
-addThumbnails(addPhotos());
+sendRequest(onSuccess, onFail, 'GET');
+setUserFormSubmit(showSuccess, showError);

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {isEscapeKey} from './utils.js';
 
 const bigPictureSection = document.querySelector('.big-picture');
@@ -83,4 +82,4 @@ const thumbnailClickHandler = (data) => {
     }
   });
 };
-export {thumbnailClickHandler};
+export {thumbnailClickHandler, closeModal};
