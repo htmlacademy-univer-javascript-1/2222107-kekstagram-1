@@ -82,8 +82,6 @@ const onFail = () => {
   document.body.append(messageAlert);
 };
 
-
-
 export {
   randomNumber,
   checkStringLength,
