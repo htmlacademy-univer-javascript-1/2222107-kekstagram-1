@@ -1,4 +1,5 @@
 import {addThumbnails} from './thumbnails.js';
+import {setFilter, showFilters, TIMEOUT_DELAY} from './filters.js';
 
 const randomNumber =(min, max) => {
   if (min < 0 || max < 0) {
@@ -22,9 +23,48 @@ const identificationGenerator = () => {
   return () => ++identification;
 };
 
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const throttle = (callback, delayBetweenFrames) => {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+};
+
+const shuffleArray = (array) => {
+  let currentIndex = array.length;
+  let randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+};
+
 const onSuccess = (data) => {
   const photos = data.slice();
   addThumbnails(photos);
+  showFilters();
+  setFilter(debounce((filterData) => addThumbnails(filterData(data)), TIMEOUT_DELAY));
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
@@ -42,6 +82,8 @@ const onFail = () => {
   document.body.append(messageAlert);
 };
 
+
+
 export {
   randomNumber,
   checkStringLength,
@@ -49,6 +91,8 @@ export {
   identificationGenerator,
   isEscapeKey,
   onSuccess,
-  onFail
+  onFail,
+  throttle,
+  shuffleArray
 };
 

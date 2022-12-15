@@ -4,7 +4,14 @@ const template = document.querySelector('#picture').content;
 const documentFragment = document.createDocumentFragment();
 const pictures = document.querySelector('.pictures');
 
+const clearPictures = () => {
+  const pictureList = document.querySelectorAll('.picture');
+
+  pictureList.forEach((picture) => picture.remove());
+};
+
 const addThumbnails = (photos) => {
+  clearPictures();
   for (let i = 0; i < photos.length; i++) {
     const photo = photos[i];
     const picture = template.cloneNode(true);
