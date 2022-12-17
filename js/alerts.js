@@ -31,11 +31,13 @@ const showSuccess = () => {
 
 const showError = () => {
   const error = errorTemplate.cloneNode(true);
-
+  document.removeEventListener('keydown', closeUploadFileForm);
   const closeModal = (e) => {
     if (isEscapeKey(e)) {
       document.removeEventListener('click', closeModal);
       document.removeEventListener('keydown', closeModal);
+      document.querySelector('.img-upload__form').classList.remove('hidden');
+      document.addEventListener('keydown', closeUploadFileForm);
       document.querySelector('.error').remove();
     } else if (e.type === 'click') {
       const errorInner = e.target.closest('.error__inner');
@@ -46,6 +48,7 @@ const showError = () => {
         document.removeEventListener('keydown', closeModal);
         document.querySelector('.error').remove();
         document.querySelector('.img-upload__form').classList.remove('hidden');
+        document.addEventListener('keydown', closeUploadFileForm);
       }
     }
   };

@@ -1,27 +1,8 @@
 import {addThumbnails} from './thumbnails.js';
 import {setFilter, showFilters, TIMEOUT_DELAY} from './filters.js';
-
-const randomNumber =(min, max) => {
-  if (min < 0 || max < 0) {
-    return -1;
-  }
-  if (min > max) {
-    [min, max] = [max, min];
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getRandomElementFromArray = (array) => array[randomNumber(0, array.length - 1)];
-
-const checkStringLength = (str, max) => str.length <= max;
+import {thumbnailClickHandler} from './pictures.js';
 
 const isEscapeKey = (event) => event.key === 'Escape';
-
-const identificationGenerator = () => {
-  let identification = 0;
-
-  return () => ++identification;
-};
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
@@ -30,19 +11,6 @@ const debounce = (callback, timeoutDelay = 500) => {
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
-
-const throttle = (callback, delayBetweenFrames) => {
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
   };
 };
 
@@ -65,6 +33,7 @@ const onSuccess = (data) => {
   addThumbnails(photos);
   showFilters();
   setFilter(debounce((filterData) => addThumbnails(filterData(data)), TIMEOUT_DELAY));
+  thumbnailClickHandler(data);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
@@ -83,14 +52,9 @@ const onFail = () => {
 };
 
 export {
-  randomNumber,
-  checkStringLength,
-  getRandomElementFromArray,
-  identificationGenerator,
   isEscapeKey,
   onSuccess,
   onFail,
-  throttle,
   shuffleArray
 };
 
