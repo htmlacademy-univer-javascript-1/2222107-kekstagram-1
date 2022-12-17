@@ -5,6 +5,7 @@ import {sendRequest} from './api.js';
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
 const COUNT_TAGS = 5;
 const STEP_SCALE = 25;
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -12,6 +13,7 @@ const uploadCancel = document.querySelector('#upload-cancel');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imgPreview = document.querySelector('.img-upload__preview img');
+
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
