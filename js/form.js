@@ -1,8 +1,8 @@
 import {isEscapeKey} from './utils.js';
-import {smartSlider} from './slider.js';
+import {addSmartSlider} from './slider.js';
 import {sendRequest} from './api.js';
 
-const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
+const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
 const COUNT_TAGS = 5;
 const STEP_SCALE = 25;
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -26,7 +26,7 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
 
-const smartSliderFilters = smartSlider('none', effectLevelSlider, effectLevelValue);
+const smartSliderFilters = addSmartSlider('none', effectLevelSlider, effectLevelValue);
 
 scaleControlSmaller.addEventListener('click', () => {
   let percent = Number(scaleControlValue.value.slice(0, -1));

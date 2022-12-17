@@ -7,6 +7,7 @@ const likesCount = bigPictureSection.querySelector('.likes-count');
 const commentsCount = bigPictureSection.querySelector('.comments-count');
 const commentCurrent = bigPictureSection.querySelector('.comment-current');
 const socialComments = bigPictureSection.querySelector('.social__comments');
+const socialCaption = bigPictureSection.querySelector('.social__caption');
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
@@ -68,6 +69,7 @@ const openModal = (image) => {
   bigPictureImg.src = image.url;
   likesCount.textContent = image.likes;
   bigPictureImg.alt = image.description;
+  socialCaption.textContent = image.description;
   bigPictureSection.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', closeModal);
