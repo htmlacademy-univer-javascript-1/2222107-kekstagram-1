@@ -1,5 +1,6 @@
 import {addThumbnails} from './thumbnails.js';
 import {setFilter, showFilters, TIMEOUT_DELAY} from './filters.js';
+import {thumbnailClickHandler} from './pictures.js';
 
 const randomNumber =(min, max) => {
   if (min < 0 || max < 0) {
@@ -65,6 +66,7 @@ const onSuccess = (data) => {
   addThumbnails(photos);
   showFilters();
   setFilter(debounce((filterData) => addThumbnails(filterData(data)), TIMEOUT_DELAY));
+  thumbnailClickHandler(data);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 

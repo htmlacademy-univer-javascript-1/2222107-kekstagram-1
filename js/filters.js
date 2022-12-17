@@ -1,13 +1,13 @@
 import {shuffleArray} from './utils.js';
 
 const TIMEOUT_DELAY = 500;
-
+const MAX_RANDOM_IMG_COUNT = 10;
 const imgFilters = document.querySelector('.img-filters');
 const imgFiltersForm = document.querySelector('.img-filters__form');
 
 const filters = {
   'filter-default': (data) => data,
-  'filter-random': (data) => shuffleArray(data.slice()),
+  'filter-random': (data) => shuffleArray(data.slice()).slice(0, MAX_RANDOM_IMG_COUNT),
   'filter-discussed': (data) => data.slice().sort((a, b) => b.comments.length - a.comments.length)
 };
 

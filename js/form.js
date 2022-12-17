@@ -4,6 +4,7 @@ import {sendRequest} from './api.js';
 
 const TAG_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/i;
 const COUNT_TAGS = 5;
+const STEP_SCALE = 25;
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -29,9 +30,9 @@ const smartSliderFilters = smartSlider('none', effectLevelSlider, effectLevelVal
 
 scaleControlSmaller.addEventListener('click', () => {
   let percent = Number(scaleControlValue.value.slice(0, -1));
-  if (percent > 25) {
-    percent = percent - 25;
-    scaleControlValue.value = String(percent) + String('%');
+  if (percent > STEP_SCALE) {
+    percent = percent - STEP_SCALE;
+    scaleControlValue.value = `${percent}%`;
   }
   imgPreview.setAttribute('style', `transform: scale(${percent / 100})`);
 });
@@ -39,8 +40,8 @@ scaleControlSmaller.addEventListener('click', () => {
 scaleControlBigger.addEventListener('click', () => {
   let percent = Number(scaleControlValue.value.slice(0, -1));
   if (percent < 100) {
-    percent = percent + 25;
-    scaleControlValue.value = String(percent) + String('%');
+    percent = percent + STEP_SCALE;
+    scaleControlValue.value = `${percent}%`;
   }
   imgPreview.setAttribute('style', `transform: scale(${percent / 100})`);
 });
@@ -86,6 +87,9 @@ const checkMaxHashtagsCount = () => {
 };
 
 const checkIfHashtagCorrect = () => {
+  if (textHashtags.value === '') {
+    return true;
+  }
   const hashTagsArray = textHashtags.value.toLowerCase().split(' ');
   return hashTagsArray.every((hashtag) => TAG_REGEX.test(hashtag));
 };
