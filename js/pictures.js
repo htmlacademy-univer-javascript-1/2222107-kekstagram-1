@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils.js';
 
+const COUNT_COMMENTS = 5;
 const bigPictureSection = document.querySelector('.big-picture');
 const pictures = document.querySelector('.pictures');
 const bigPictureImg = bigPictureSection.querySelector('.big-picture__img').querySelector('img');
@@ -26,10 +27,10 @@ const closeModal = (evt) => {
     document.removeEventListener('keydown', closeModal);
     bigPictureCancel.removeEventListener('click', closeModal);
     document.removeEventListener('keydown', onModalEscKeydown);
+    socialComments.textContent = '';
+    commentCurrent.textContent = 0;
+    commentsLoader.classList.remove('hidden');
   }
-  socialComments.textContent = '';
-  commentCurrent.textContent = 0;
-  commentsLoader.classList.remove('hidden');
 };
 
 const addComment = (image) => {
@@ -46,7 +47,7 @@ const addComment = (image) => {
 };
 
 const addFiveComments = (image) => {
-  for(let i = 0; i < 5; i++) {
+  for(let i = 0; i < COUNT_COMMENTS; i++) {
     if (Number(commentCurrent.textContent) < Number(commentsCount.textContent)) {
       addComment(image);
       commentCurrent.textContent = Number(commentCurrent.textContent) + 1;
